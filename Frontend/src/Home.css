@@ -1,0 +1,35 @@
+.hero-section {
+    height: 100vh;
+    background-image: url("https://img.freepik.com/free-photo/tender-feminine-young-female-student-curly-hairstyle-pointing-left-index-finger-smiling-friendly-asking-which-place-dorm-standing-cheerful-white-wall_176420-37578.jpg?t=st=1746526816~exp=1746530416~hmac=6217f1e424fb51ae45598de009c98b7fb25b81da27534a9c45bd111229370fab&w=1380");
+    background-size: cover;
+    background-position: center top;
+    display: flex;
+    align-items: center;         
+    justify-content: flex-start; 
+    padding-left: 50px;          
+    text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+    .hero-section {
+        height: 100vh;
+        background: url("https://img.freepik.com/free-photo/tender-feminine-young-female-student-curly-hairstyle-pointing-left-index-finger-smiling-friendly-asking-which-place-dorm-standing-cheerful-white-wall_176420-37578.jpg?t=st=1746526816~exp=1746530416~hmac=6217f1e424fb51ae45598de009c98b7fb25b81da27534a9c45bd111229370fab&w=1380")  bottom no-repeat, url(paper.gif);
+        height: 70vh;
+        display: flex;
+        align-items: center;         
+        justify-content: flex-start; 
+        padding-left: 50px;          
+        text-align: left;
+    }
+    
+}
+
+
+.hero-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Or center, depending on your design */
+    gap: 1rem; /* Adds space between items */
+  }
+  
+

@@ -1,11 +1,23 @@
+
 import Button from "./Button";
 import Footer from "./Footer";
 import './Home.css'
+import { useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import Navbar from "./Navbar";
 
 
 import Products from "./Products";
+import { useLocation } from "react-router-dom";
 
 export default function Home() {
+  const location = useLocation();
+  const username = location.state?.username;
+useEffect(() => {
+    if (username) {
+      toast.success(`Welcome ${username}`);
+    }
+  }, [username]);
   return (<div className="continer-fluid">
     <div className="hero-section">
     <div className="hero-content-wrapper">
@@ -17,6 +29,8 @@ export default function Home() {
   </div>
       <Products />
       <Footer/>
+
+            <ToastContainer position="top-right"  />
 
 
 </div>  

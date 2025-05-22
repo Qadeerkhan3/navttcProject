@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './LoginForm.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-function LoginForm() {
+
+function LoginForm({setIsAuthenticated}) {
   const navigate = useNavigate();
 const [formdata, setFormData] = useState({
   email : '',
   password: '',
 });
+
 
   const handleSubmit = async(e) => {
 
@@ -23,10 +25,14 @@ const [formdata, setFormData] = useState({
           
     
           const res = await axios.post('http://localhost:5000/api/login', formdata);
-    
-          alert(res.data.message);
 
-          navigate('/')
+          setIsAuthenticated((prev) => !prev);
+
+          localStorage.setItem('token', res.data.token);
+
+navigate('/', { state: { username: res.data.username } });
+
+
     
         } catch (error) {
          console.log('something went wrong', error);

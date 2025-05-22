@@ -3,12 +3,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import UseDarkMode from "./UseDarkMode";
+import Products from "./Products";
 import Login from "./login";
 import "./App.css";
 
-export default function Navbar() {
+export default function Navbar({isAutenticated}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen2, setDropdownOpen2] = useState(false);
+
+  const path = isAutenticated ? "/cart" : "/"
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,7 +42,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/cart">
+              <Link className="nav-link active" aria-current="page" to={path}>
                 Cart
               </Link>
             </li>
@@ -46,7 +50,7 @@ export default function Navbar() {
               <Link
                 className="nav-link active"
                 aria-current="page"
-                to="/product"
+                to="/Products"
               >
                 product
               </Link>
@@ -73,70 +77,43 @@ export default function Navbar() {
                   <Link
                     className="nav-link active"
                     aria-current="page"
-                    to="/checkout"
+                    to="/Shoes"
                   >
-                    Checkout
+                    Shoes
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
+                  <Link className="dropdown-item" to="/Clothes">
+                    Clothes
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
+                  <Link className="dropdown-item" to="/Watches">
+                    Watches
+                  </Link>
                 </li>
               </ul>
             </li>
-            <li
-              className={`nav-item dropdown ${dropdownOpen2 ? "show" : ""}`}
-              onMouseEnter={() => setDropdownOpen2(true)}
-              onMouseLeave={() => setDropdownOpen2(false)}
-            >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                aria-expanded={dropdownOpen2}
-              >
-                Dropdown link
-              </a>
-              <ul
-                className={`dropdown-menu ${dropdownOpen2 ? "show" : ""}`}
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <li>
-                  <a className="dropdown-item" href="#">
-                    careers
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
+            
           </ul>
 
           <>
             <UseDarkMode />
             
+            {isAutenticated ? <Link
+              to="/logout"
+              className="btn btn-success px-4 py-2 rounded-pill shadow-sm text-white"
+              style={{ fontWeight: "500", fontSize: "16px" }}
+            >
+              Logout
+            </Link>: 
             <Link
               to="/login"
               className="btn btn-success px-4 py-2 rounded-pill shadow-sm text-white"
               style={{ fontWeight: "500", fontSize: "16px" }}
             >
               Login
-            </Link>
+            </Link>}
             <ThemeToggle />
           </>
         </div>

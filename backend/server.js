@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -15,7 +16,7 @@ const port = process.env.PORT || 5000;
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB_URI);
-    console.log("MongoDB connected");
+    console.log("MongoDB connected Successfully...");
   } catch (err) {
     console.error("MongoDB connection failed:", err.message);
   }
@@ -31,6 +32,30 @@ const userSchema = new mongoose.Schema({
 })
 
 const User = mongoose.model('User', userSchema);
+
+const productSchema = new mongoose.Schema({
+  product_name: String,
+  price: String,
+  description: String,
+  image: String
+})
+
+const Product = new mongoose.model("Product", productSchema);
+
+app.post("/api/product", async (req,res) =>{
+  const {product_name, price, description, imageUrl} = req.body;
+
+  try {
+    const products = new Product({product_name, price, description, image: imageUrl});
+    await products.save();
+    return res.status(200).json({message: "product added successfully"});
+  } catch (error) {
+    
+     return res.status(500).json({message: "internal server error"});
+
+  }
+
+})
 
 app.post('/api/register', async (req, res)=>{
   const {username, email, password} = req.body;
@@ -57,6 +82,7 @@ app.post('/api/register', async (req, res)=>{
 
 app.post('/api/login', async (req, res)=>{
   const {email, password} = req.body;
+  console.log('login hitted')
   
   try {
     const existingUser = await User.findOne({email});
@@ -70,7 +96,11 @@ app.post('/api/login', async (req, res)=>{
       return res.status(401).json({message: "invalid credentials"});
     }
 
-    return res.status(200).json({message: "login successful"});
+    const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, {
+ expiresIn: '1h',
+ });
+
+    return res.status(200).json({token, message: "login successful",username:existingUser.username});
 
   } catch (error) {
 

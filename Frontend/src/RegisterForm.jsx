@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 function RegisterForm() {
+  const navigate = useNavigate();
 const [formdata, setFormData] = useState({
  username: '',
   email : '',
@@ -21,7 +24,9 @@ const [formdata, setFormData] = useState({
 
       const res = await axios.post('http://localhost:5000/api/register', formdata);
 
-      alert(res.data.message);
+toast.info(res.data.message, {
+  autoClose: 3000
+});    
 
 
     } catch (error) {
@@ -59,8 +64,12 @@ const [formdata, setFormData] = useState({
           className="login-input"
           required
         />
-        <button type="submit" className="btn login-button">Login</button>
+        <button type="submit" className="btn login-button">Register</button>
+        <Link to="/login">already have account</Link>
       </form>
+
+                  <ToastContainer position="top-right"  />
+
     </div>
   );
 }
